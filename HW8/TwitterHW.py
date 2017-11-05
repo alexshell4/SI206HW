@@ -94,15 +94,19 @@ conn.commit()
     # Mon Oct 09 15:45:45 +0000 2017 - RT @MikeRothCom: Beautiful morning at @UMich - It’s easy to forget to
     # take in the view while running from place to place @umichDLHS  @umich…
 # Include the blank line between each tweet.
-cur.execute('SELECT author FROM Tweets WHERE retweets > 2')
-more_than_2_rts = cur.fetchall()
-print('more_than_2_rts - %s ' % set(more_than_2_rts))
+cur.execute('SELECT time_posted, tweet_text FROM Tweets')
+date_msg_tup = cur.fetchall()
+for tweet in date_msg_tup:
+    print(tweet[0] + ' - ' + tweet[1] + '\n')
 
 # Select the author of all of the tweets (the full rows/tuples of information) that have been retweeted MORE
 # than 2 times, and fetch them into the variable more_than_2_rts.
 # Print the results
+cur.execute('SELECT author FROM Tweets WHERE retweets > 2')
+more_than_2_rts = cur.fetchall()
+print('more_than_2_rts - %s ' % set(more_than_2_rts))
 
-
+cur.close()
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
